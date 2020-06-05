@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+      - staging
+      - trying
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Pull submodules
+        run: git submodule update --init --recursive
+
+      - name: Build Open edX
+        run: docker build . --file ./Dockerfile --tag eoluchile/edx-forum:${GITHUB_SHA} --tag eoluchile/edx-forum:juniper
+
+      - name: Push
+        run: |
+          echo "${DOCKERHUB_PASSWORD}" | docker login --username ${DOCKERHUB_USER} --password-stdin
+          docker push eoluchile/edx-forum:${GITHUB_SHA}
+          docker push eoluchile/edx-forum:latest
+        env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
