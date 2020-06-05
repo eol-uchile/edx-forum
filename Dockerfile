@@ -20,7 +20,7 @@ WORKDIR /openedx/ruby-build
 RUN PREFIX=/usr/local ./install.sh
 
 # Install ruby and some specific dependencies
-ARG RUBY_VERSION=2.4.1
+ARG RUBY_VERSION=2.5.7
 ARG BUNDLER_VERSION=1.11.2
 ARG RAKE_VERSION=10.4.2
 RUN ruby-build $RUBY_VERSION /openedx/ruby
