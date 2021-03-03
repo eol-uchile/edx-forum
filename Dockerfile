@@ -1,4 +1,6 @@
-FROM docker.io/ubuntu:18.04
+FROM docker.io/ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN mkdir /openedx
 
@@ -29,7 +31,7 @@ RUN gem install bundler -v $BUNDLER_VERSION
 RUN gem install rake -v $RAKE_VERSION
 
 # Install forum
-RUN git clone https://github.com/edx/cs_comments_service.git --branch open-release/juniper.1 --depth 1 /openedx/cs_comments_service
+RUN git clone https://github.com/edx/cs_comments_service.git --branch open-release/koa.master --depth 1 /openedx/cs_comments_service
 WORKDIR /openedx/cs_comments_service
 RUN bundle install --deployment
 
@@ -38,7 +40,7 @@ RUN chmod a+x /openedx/bin/*
 ENV PATH /openedx/bin:${PATH}
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-ENV RACK_ENV staging
+ENV SINATRA_ENV staging
 ENV NEW_RELIC_ENABLE false
 ENV API_KEY forumapikey
 ENV SEARCH_SERVER "http://elasticsearch:9200"
