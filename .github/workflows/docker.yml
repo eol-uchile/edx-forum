@@ -28,5 +28,6 @@ jobs:
           
       - name: Push
         run: |
-          docker push ghrc.io/eol-uchile/edx-forum:${GITHUB_SHA}
+          docker push ghcr.io/eol-uchile/edx-forum:${GITHUB_SHA}
           docker push ghcr.io/eol-uchile/edx-forum:koa
+#
