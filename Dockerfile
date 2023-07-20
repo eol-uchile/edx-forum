@@ -38,12 +38,12 @@ RUN bundle install --deployment
 COPY ./bin /openedx/bin
 RUN chmod a+x /openedx/bin/*
 ENV PATH /openedx/bin:${PATH}
+ENV SEARCH_SERVER_ES7 "http://elasticsearch:9200"
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 ENV SINATRA_ENV staging
 ENV NEW_RELIC_ENABLE false
 ENV API_KEY forumapikey
-ENV SEARCH_SERVER "http://elasticsearch:9200"
 ENV MONGODB_AUTH ""
 ENV MONGOID_AUTH_MECH ""
 ENV MONGODB_HOST "mongodb"
